@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+</head>
+<body>
+    <h1>Listado de Personas .</h1>
+    <hr/>
+      <div id="pestanias">
+        <div id="t1">
+          <p id="mensajeFinal"></p>
+        </div>
+      </div>
+    <hr/>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+  console.log("llegando al JS");
+        $.ajax({
+              dataType: 'json',
+              url: "http://127.0.0.1:5984/demo001/_design/segundo/_view/vista002?include_docs=true"
+              }).then(function(data) {
+                console.log(data);
+                for(var i=0; i<data.rows.length; i++){
+                    var numero = i+1;  
+                    var nombre = data.rows[i].doc.nombre;
+                    var apellido = data.rows[i].doc.apellido;
+                    var id = data.rows[i].doc._id;
+                    console.log(id);
+                    var url = '{{ url_for("persona", id="'+id+'")|safe }}'; 
+                    console.log(url);
+                    $('#mensajeFinal').append("<p>"+ numero +") <b>Nombre: </b> "+ nombre + " <b>Apellido: </b> " +
+                      apellido + ' | [<a href="'+url+'">ver</a>]'+ "</p>");
+                }
+        });
+
+});
+</script>
+
+</body>
+</html>

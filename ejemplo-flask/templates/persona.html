@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>FlaskApp</title>
+</head>
+<body>
+    <h2>Información de Personas</h2>
+    <hr/>
+    <div id="pestanias">
+    <p><b>Nombre:</b><span id="nombre"><span></p>
+    <p><b>Apellido:</b><span id="apellido"><span></p>
+    <p><b>Tarjeta:</b><span id="tarjeta"><span></p>
+    <p><b>Lenguaje:</b><span id="lenguaje"><span></p>
+    </div>
+
+    <input type="hidden" id="id_persona" value="{{id}}">
+    <hr/>
+    <a href="{{ url_for('index') }}">[regresar]</a>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+  var id_persona = $("#id_persona").val(); 
+  var url = 'http://127.0.0.1:5984/demo001/_design/tercero/_view/persona?include_docs=true&key="'+id_persona+'"';
+  console.log(id_persona);
+  console.log(url);
+  $.ajax({
+          dataType: 'json',
+          url: url
+  }).then(function(data) {
+                console.log(data);
+                for(var i=0; i<data.rows.length; i++){
+                    var nombre = data.rows[i].doc.nombre;
+                    var apellido = data.rows[i].doc.apellido;
+                    var tarjeta = data.rows[i].doc.numero_tarjeta;
+                    var lenguaje = data.rows[i].doc.lenguaje;
+                    $('#nombre').append("<b>"+nombre+"</b>");
+                    $('#apellido').append(apellido);
+                    $('#tarjeta').append(tarjeta);
+                    $('#lenguaje').append(lenguaje);
+                 }
+  });
+
+});
+</script>
+</body>
+</html>
