@@ -22,7 +22,7 @@
 <script>
 $(document).ready(function() {
   var id_persona = $("#id_persona").val(); 
-  var url = 'http://127.0.0.1:5984/demo001/_design/tercero/_view/persona?include_docs=true&key="'+id_persona+'"';
+  var url = 'http://localhost:5984/clase5/_design/segunda/_view/vista002?include_docs=true&key="'+id_persona+'"';
   console.log(id_persona);
   console.log(url);
   $.ajax({
@@ -35,7 +35,7 @@ $(document).ready(function() {
                     var apellido = data.rows[i].doc.apellido;
                     var tarjeta = data.rows[i].doc.numero_tarjeta;
                     var lenguaje = data.rows[i].doc.lenguaje;
-                    $('#nombre').append("<b>"+nombre+"</b>");
+                    $('#nombre').append(nombre);
                     $('#apellido').append(apellido);
                     $('#tarjeta').append(tarjeta);
                     $('#lenguaje').append(lenguaje);
